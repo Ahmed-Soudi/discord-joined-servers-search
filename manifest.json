@@ -1,0 +1,43 @@
+{
+  "manifest_version": 3,
+  "name": "Discord Joined Servers Search",
+  "version": "7.0.1",
+  "description": "Search and switch between Discord servers you have joined. Only joined servers; no channels or public server discovery.",
+  "permissions": [
+    "storage"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://discord.com/channels/*"
+      ],
+      "js": [
+        "page-bridge.js"
+      ],
+      "run_at": "document_start",
+      "world": "MAIN"
+    },
+    {
+      "matches": [
+        "https://discord.com/channels/*"
+      ],
+      "js": [
+        "sidebar.js"
+      ],
+      "css": [
+        "sidebar.css"
+      ],
+      "run_at": "document_idle",
+      "world": "ISOLATED"
+    }
+  ],
+  "action": {
+    "default_title": "Discord Joined Servers Search",
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}

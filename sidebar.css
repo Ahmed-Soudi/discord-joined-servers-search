@@ -1,0 +1,22 @@
+#dsn-v7-root { all: initial; position: fixed; z-index: 2147483000; left: 76px; top: 75px; width: 296px; max-height: calc(100vh - 95px); display: flex; flex-direction: column; overflow: hidden; background: #202127; color: #f2f3f5; border: 1px solid #444651; border-radius: 11px; box-shadow: 0 6px 24px #000a; font: 13px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
+#dsn-v7-root *, #dsn-v7-root *::before, #dsn-v7-root *::after { box-sizing: border-box; }
+#dsn-v7-root.dsn-v7-disabled { display: none !important; }
+#dsn-v7-root .dsn-v7-heading { all: unset; display: flex; align-items: center; justify-content: space-between; padding: 8px 11px; min-height: 42px; background: #2a2c34; font-weight: 650; }
+#dsn-v7-root .dsn-v7-buttons { display: flex; gap: 5px; }
+#dsn-v7-root .dsn-v7-icon-button { display: inline-flex; align-items: center; justify-content: center; height: 28px; width: 28px; border: 0; border-radius: 6px; color: #f7f7fa; background: #41434e; cursor: pointer; font: 19px system-ui; }
+#dsn-v7-root .dsn-v7-inner { display: flex; flex-direction: column; min-height: 0; }
+#dsn-v7-root.dsn-v7-collapsed { width: 205px; }
+#dsn-v7-root.dsn-v7-collapsed .dsn-v7-inner { display: none; }
+#dsn-v7-root .dsn-v7-search { all: unset; box-sizing: border-box; margin: 9px 10px 6px; height: 36px; width: calc(100% - 20px); padding: 0 10px; color: #fff; border: 1px solid #606373; border-radius: 6px; background: #111216; font: 12px system-ui; }
+#dsn-v7-root .dsn-v7-search:focus { border-color: #a0b2ff; }
+#dsn-v7-root .dsn-v7-count, #dsn-v7-root .dsn-v7-detail { padding: 1px 11px 3px; color: #b5b8c5; font-size: 11px; }
+#dsn-v7-root .dsn-v7-detail { color: #96a5d8; padding-bottom: 8px; }
+#dsn-v7-root .dsn-v7-list { overflow-y: auto; min-height: 0; padding: 0 6px 8px; flex: 1; scrollbar-width: thin; }
+#dsn-v7-root .dsn-v7-row { all: unset; box-sizing: border-box; display: flex; align-items: flex-start; gap: 8px; min-height: 31px; padding: 6px 8px; color: #f3f4f8; text-decoration: none; border-radius: 5px; cursor: pointer; }
+#dsn-v7-root .dsn-v7-row:hover, #dsn-v7-root .dsn-v7-row:focus-visible, #dsn-v7-root .dsn-v7-selected { background: #42465b; }
+#dsn-v7-root .dsn-v7-dot { font-size: 11px; color: #a4b4ff; line-height: 1.6; flex: none; }
+#dsn-v7-root .dsn-v7-name { overflow-wrap: anywhere; white-space: normal; min-width: 0; }
+#dsn-v7-root .dsn-v7-empty { padding: 12px; margin: 0; color: #c3c7d5; }
+#dsn-v7-root .dsn-v7-footer { padding: 7px 10px; border-top: 1px solid #353746; text-align: right; }
+#dsn-v7-root .dsn-v7-copy { font: 11px system-ui; background: none; border: 0; color: #b8c4ff; cursor: pointer; padding: 2px; }
+@media (max-width: 550px) { #dsn-v7-root { left: 64px; width: min(296px, calc(100vw - 70px)); } }
