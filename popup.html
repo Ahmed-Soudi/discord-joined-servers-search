@@ -1,11 +1,24 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Discord Joined Servers Search</title><style>
-body{font:14px system-ui;background:#202127;color:#fff;width:270px;padding:17px;margin:0}h1{font-size:17px;margin:0 0 13px}label{display:flex;gap:9px;align-items:center;margin:13px 0}p{font-size:12px;color:#bec2cd;line-height:1.5}small{color:#bec2cd}a{color:#b8c4ff}
-</style></head><body>
-<h1>Discord Joined Servers Search</h1>
-<label><input type="checkbox" id="enabled"> Enable server sidebar</label>
-<label><input type="checkbox" id="expanded"> Expand sidebar</label>
-<p>Search and switch between <strong>Discord servers you've already joined</strong>. Does not search channels or public servers you haven't joined. No bot or login token required.</p>
-<small>Extension version: 7.0.1</small>
-<script src="popup.js"></script>
-</body></html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Discord Joined Servers Search</title>
+  <style>
+    body{font:14px system-ui;background:#202127;color:#fff;width:288px;padding:16px;margin:0}
+    h1{font-size:17px;margin:0 0 13px}label{display:flex;gap:9px;align-items:center;margin:13px 0}
+    p{font-size:12px;color:#bec2cd;line-height:1.5}small{color:#bec2cd}
+    button{background:#41434e;color:#fff;border:0;border-radius:6px;padding:8px 10px;cursor:pointer}
+    button:hover{background:#535667}
+  </style>
+</head>
+<body>
+  <h1>Discord Joined Servers Search</h1>
+  <label><input type="checkbox" id="enabled"> Enable on Discord</label>
+  <label><input type="checkbox" id="showListByDefault"> Show full server list by default</label>
+  <button id="resetPosition" type="button">Reset window position</button>
+  <p>Drag using the dotted handle beside the search field. Its position is saved across browser sessions. Typing a server name shows matching servers, even when the full list is hidden.</p>
+  <p>Searches only Discord servers you've already joined. Does not search channels or discover other public servers.</p>
+  <script src="popup.js"></script>
+</body>
+</html>

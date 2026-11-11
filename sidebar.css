@@ -1,22 +1,128 @@
-#dsn-v7-root { all: initial; position: fixed; z-index: 2147483000; left: 76px; top: 75px; width: 296px; max-height: calc(100vh - 95px); display: flex; flex-direction: column; overflow: hidden; background: #202127; color: #f2f3f5; border: 1px solid #444651; border-radius: 11px; box-shadow: 0 6px 24px #000a; font: 13px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
+/* Joined Servers Search: floating drag-positionable compact search with optional full list. */
+#dsn-v7-root {
+  all: initial;
+  position: fixed;
+  z-index: 2147483000;
+  left: 76px;
+  top: 0px;
+  width: 290px;
+  max-width: calc(100vw - 8px);
+  max-height: calc(100vh - 8px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: #202127;
+  color: #f2f3f5;
+  border: 1px solid #444651;
+  border-radius: 9px;
+  box-shadow: 0 6px 24px #000a;
+  font: 13px/1.45 system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
 #dsn-v7-root *, #dsn-v7-root *::before, #dsn-v7-root *::after { box-sizing: border-box; }
 #dsn-v7-root.dsn-v7-disabled { display: none !important; }
-#dsn-v7-root .dsn-v7-heading { all: unset; display: flex; align-items: center; justify-content: space-between; padding: 8px 11px; min-height: 42px; background: #2a2c34; font-weight: 650; }
-#dsn-v7-root .dsn-v7-buttons { display: flex; gap: 5px; }
-#dsn-v7-root .dsn-v7-icon-button { display: inline-flex; align-items: center; justify-content: center; height: 28px; width: 28px; border: 0; border-radius: 6px; color: #f7f7fa; background: #41434e; cursor: pointer; font: 19px system-ui; }
-#dsn-v7-root .dsn-v7-inner { display: flex; flex-direction: column; min-height: 0; }
-#dsn-v7-root.dsn-v7-collapsed { width: 205px; }
-#dsn-v7-root.dsn-v7-collapsed .dsn-v7-inner { display: none; }
-#dsn-v7-root .dsn-v7-search { all: unset; box-sizing: border-box; margin: 9px 10px 6px; height: 36px; width: calc(100% - 20px); padding: 0 10px; color: #fff; border: 1px solid #606373; border-radius: 6px; background: #111216; font: 12px system-ui; }
-#dsn-v7-root .dsn-v7-search:focus { border-color: #a0b2ff; }
-#dsn-v7-root .dsn-v7-count, #dsn-v7-root .dsn-v7-detail { padding: 1px 11px 3px; color: #b5b8c5; font-size: 11px; }
-#dsn-v7-root .dsn-v7-detail { color: #96a5d8; padding-bottom: 8px; }
-#dsn-v7-root .dsn-v7-list { overflow-y: auto; min-height: 0; padding: 0 6px 8px; flex: 1; scrollbar-width: thin; }
-#dsn-v7-root .dsn-v7-row { all: unset; box-sizing: border-box; display: flex; align-items: flex-start; gap: 8px; min-height: 31px; padding: 6px 8px; color: #f3f4f8; text-decoration: none; border-radius: 5px; cursor: pointer; }
-#dsn-v7-root .dsn-v7-row:hover, #dsn-v7-root .dsn-v7-row:focus-visible, #dsn-v7-root .dsn-v7-selected { background: #42465b; }
+#dsn-v7-root .dsn-v7-bar {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: 0 0 auto;
+  padding: 2px 5px;
+  min-height: 30px;
+  background: #2a2c34;
+}
+#dsn-v7-root .dsn-v7-grip {
+  all: unset;
+  box-sizing: border-box;
+  flex: 0 0 21px;
+  width: 21px;
+  min-height: 26px;
+  text-align: center;
+  font: 19px/27px system-ui;
+  color: #c6cbda;
+  border-radius: 5px;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+}
+#dsn-v7-root .dsn-v7-grip:hover { background: #424451; }
+#dsn-v7-root .dsn-v7-grip:focus-visible,
+#dsn-v7-root .dsn-v7-icon-button:focus-visible,
+#dsn-v7-root .dsn-v7-search:focus-visible { outline: 2px solid #a9bcff; outline-offset: -1px; }
+#dsn-v7-root.dsn-v7-dragging .dsn-v7-grip { cursor: grabbing; }
+#dsn-v7-root .dsn-v7-search {
+  all: unset;
+  box-sizing: border-box;
+  height: 26px;
+  min-width: 0;
+  flex: 1 1 auto;
+  color: #fff;
+  border: 1px solid #606373;
+  border-radius: 6px;
+  background: #111216;
+  padding: 0 7px;
+  font: 12px system-ui;
+}
+#dsn-v7-root .dsn-v7-search::placeholder { color: #a7acbc; opacity: 1; }
+#dsn-v7-root .dsn-v7-icon-button {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 28px;
+  width: 28px;
+  height: 26px;
+  border: 0;
+  border-radius: 6px;
+  color: #f7f7fa;
+  background: #41434e;
+  cursor: pointer;
+  font: 19px system-ui;
+}
+#dsn-v7-root .dsn-v7-icon-button:hover { background: #535667; }
+#dsn-v7-root .dsn-v7-panel { display: none; min-height: 0; flex-direction: column; }
+#dsn-v7-root.dsn-v7-list-open .dsn-v7-panel { display: flex; }
+#dsn-v7-root .dsn-v7-heading {
+  all: unset;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 36px;
+  flex: 0 0 auto;
+  padding: 3px 9px;
+  background: #262832;
+  user-select: none;
+  cursor: grab;
+  touch-action: none;
+}
+#dsn-v7-root.dsn-v7-dragging .dsn-v7-heading { cursor: grabbing; }
+#dsn-v7-root .dsn-v7-title { font: 650 12px system-ui; color: #f5f6fa; }
+#dsn-v7-root .dsn-v7-count, #dsn-v7-root .dsn-v7-detail { padding: 2px 10px 3px; color: #b5b8c5; font: 11px system-ui; }
+#dsn-v7-root .dsn-v7-detail { color: #96a5d8; padding-bottom: 7px; }
+#dsn-v7-root .dsn-v7-list {
+  min-height: 0;
+  max-height: min(410px, calc(100vh - 175px));
+  overflow-y: auto;
+  padding: 0 6px 8px;
+  scrollbar-width: thin;
+}
+#dsn-v7-root .dsn-v7-row {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  min-height: 31px;
+  padding: 6px 8px;
+  color: #f3f4f8;
+  text-decoration: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+#dsn-v7-root .dsn-v7-row:hover, #dsn-v7-root .dsn-v7-row:focus-visible,
+#dsn-v7-root .dsn-v7-selected { background: #42465b; }
 #dsn-v7-root .dsn-v7-dot { font-size: 11px; color: #a4b4ff; line-height: 1.6; flex: none; }
 #dsn-v7-root .dsn-v7-name { overflow-wrap: anywhere; white-space: normal; min-width: 0; }
 #dsn-v7-root .dsn-v7-empty { padding: 12px; margin: 0; color: #c3c7d5; }
-#dsn-v7-root .dsn-v7-footer { padding: 7px 10px; border-top: 1px solid #353746; text-align: right; }
+#dsn-v7-root .dsn-v7-footer { padding: 6px 10px; border-top: 1px solid #353746; text-align: right; }
 #dsn-v7-root .dsn-v7-copy { font: 11px system-ui; background: none; border: 0; color: #b8c4ff; cursor: pointer; padding: 2px; }
-@media (max-width: 550px) { #dsn-v7-root { left: 64px; width: min(296px, calc(100vw - 70px)); } }
+@media (max-width: 550px) { #dsn-v7-root { width: min(290px, calc(100vw - 8px)); } }

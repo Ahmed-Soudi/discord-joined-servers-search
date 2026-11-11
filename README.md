@@ -1,72 +1,77 @@
 # Discord Joined Servers Search
 
-A lightweight, **Chrome Manifest V3 extension** for quickly finding and switching between **Discord servers you have already joined** on [Discord Web](https://discord.com/app).
+A small, draggable **Chrome Manifest V3 extension** that searches **only the Discord servers you've already joined** in [Discord Web](https://discord.com/channels/@me). It never searches channels, messages, or servers you have not joined.
 
-**This extension searches only servers you are a member of.** It does **not** search channels, discover public servers you have not joined, or search Discord's public server directory. It is not affiliated with Discord.
+![Chrome](https://img.shields.io/badge/Chrome-Manifest%20V3-blue) ![License](https://img.shields.io/badge/License-MIT-blue)
 
-## What it does
+## Features
 
-- Automatically displays names of joined servers from Discord's already-loaded client data.
-- Searches **joined server names only**, with keyboard navigation and one-click switching.
-- Lists servers in Discord's icon order, matching each name to its server ID and removing duplicates.
-- Offers a collapsible sidebar, manual refresh, and **Copy status** diagnostics.
-- Does **not** require you to click, hover over, or manually inspect each server to load its name.
-- Does **not** require a bot, API token, or another service.
+- **Search bar by default.** Type to see matching joined servers and click a result to switch to that server. Clear your query to return to the compact search field.
+- **Draggable window.** Drag the dotted handle at the left edge of the search field, or drag the full-list title bar. The position is saved via `chrome.storage.local` and restored when Discord is reopened, including after restarting Chrome.
+- **Unobtrusive default placement.** The compact bar starts at the **upper-left empty Discord title strip** near the server icons (`left: 76px; top: 0px` in the page viewport). The expanded-list default retains the previous location (`left: 76px; top: 75px`). You can drag either layout anywhere within the visible browser viewport.
+- **Optional full list.** Click the list toggle at the right end of the search field or enable **Show full server list by default** in the extension popup. Your preference is saved. Search results still appear automatically while typing, regardless of that setting.
+- **Position reset.** Open the extension popup and choose **Reset window position** to return to the appropriate default for your chosen layout.
+- **All joined server names without clicking icons.** The proven v7 client-side GuildStore discovery code is unchanged, including the React-data fallback. IDs keep server names correctly matched and deduplicated.
+- **Search shortcuts:** `↑` / `↓` to select, `Enter` to open the selected server, `Esc` to clear your search. The full-list view also has **Refresh** and **Copy status** controls.
 
-## Install (unpacked)
+## Install or upgrade
 
-1. Download and extract the release ZIP.
-2. Go to `chrome://extensions` and enable **Developer mode**.
-3. Remove the previous **Discord Server Names & Search v7** installation to avoid two sidebars appearing.
-4. Click **Load unpacked** and select the extracted `discord-joined-servers-search` folder.
-5. Open or refresh `https://discord.com/channels/@me`.
-6. Use the **Joined servers · v7** panel to find a server by name.
+1. Download and extract `discord-joined-servers-search-v7.1.0.zip`.
+2. Open `chrome://extensions` and enable **Developer mode**.
+3. Remove the older installed version of this extension to avoid duplicate overlays.
+4. Click **Load unpacked** and choose the extracted `discord-joined-servers-search` folder.
+5. Open or refresh [Discord Web](https://discord.com/channels/@me).
+6. Search from the compact field in the top-left, or toggle the full server list if you prefer browsing.
 
-> The extension version is **7.0.1**, a branding-only update to the working v7.0.0 release. The GuildStore/React discovery logic and internal communication IDs remain unchanged.
+The extension is published here as source for unpacked installation; it is not a Chrome Web Store listing.
 
-## Privacy & permissions
+## Settings
 
-- `storage`: saves only whether the sidebar is enabled or expanded.
-- Site access: `https://discord.com/channels/*` only.
-- Reads the joined-server metadata Discord has already loaded in your browser.
-- No tracking, analytics, external network calls, API token, password, or bot permissions.
-- Server names are **not** written to extension storage.
+| Setting | Default | Persistence |
+| --- | --- | --- |
+| Extension enabled | On | `chrome.storage.local` |
+| Full server list shown automatically | Off (search field only) | `chrome.storage.local` |
+| Panel position | Compact: `76px,0px` / Full: `76px,75px` | Saved when dragged; reset in popup |
 
-## What it does *not* do
+The compact bar is moved to the empty top row so it doesn't cover channel names at startup. The panel automatically clamps itself inside the browser viewport after a window resize or while opening a long list. Its saved position is unchanged by these temporary size adjustments.
 
-- Search channel names or messages.
-- Search or recommend servers you haven't joined.
-- Join or leave servers on your behalf.
-- Bypass server access permissions.
+## Privacy and scope
 
-## Development and tests
+- **Only joined servers** already available in your Discord client are searched.
+- Does **not** index Discord channels, messages, public directories, or servers you're not a member of.
+- Makes no network requests of its own; there is no external service, analytics, bot, or Discord login token.
+- Stores only display settings and the window position, **never server names or guild data**.
+- Page access is restricted to `https://discord.com/channels/*`; the only requested browser permission is `storage`.
+- Unofficial community extension; not endorsed by or affiliated with Discord.
 
-This is a plain JavaScript/CSS/HTML repository; there is no build step.
+## Developer notes
 
-```bash
+No build step or dependencies for the extension. The working v7 name-discovery bridge (`page-bridge.js`) and its `discord-server-names-v7:*` message identifiers deliberately remain unchanged; the filename and internal identifiers are not visible in the interface.
+
+Run the JavaScript syntax and the mocked Chromium tests:
+
+```sh
 node --check page-bridge.js
 node --check sidebar.js
 node --check popup.js
 node tests/test_early_start.cjs
-# Optional: requires Playwright + browser installation
 python tests/test_extension.py
+python tests/test_ui_7_1.py
 ```
 
-The local browser test simulates 86 joined servers and verifies server names and search behavior. Discord's GuildStore and React internals are undocumented and may change, so tests cannot guarantee compatibility with all future Discord versions.
+The Playwright tests cover 86 named servers, multiple GuildStore shapes, delayed client initialization, React fallback, compact search, drag positioning, storage restoration, saved full-list preference, and small-viewport clamping. They use a simulated Discord page and do not constitute a live Discord compatibility guarantee.
 
-### Implementation
+### Source references
 
-The read-only page-world adapter (`page-bridge.js`) retrieves GuildStore metadata from the page's existing loaded client code, with a React component data fallback. The isolated-world `sidebar.js` creates the UI. All network access is handled by Discord itself; this extension makes none.
-
-The `dsn-v7-*` CSS classes and `discord-server-names-v7:*` message identifiers are intentionally unchanged to preserve the confirmed v7 behavior.
-
-## Sources
-
-- [Vencord: Webpack Modules & Chunks](https://docs.vencord.dev/discord-code/modules/)
-- [Vencord: GuildStore types](https://github.com/Vendicated/Vencord/blob/main/packages/discord-types/src/stores/GuildStore.d.ts)
-- [Chrome: Content scripts](https://developer.chrome.com/docs/extensions/reference/manifest/content-scripts)
+- [Vencord Webpack documentation](https://docs.vencord.dev/discord-code/modules/)
+- [Vencord GuildStore types](https://github.com/Vendicated/Vencord/blob/main/packages/discord-types/src/stores/GuildStore.d.ts)
+- [Chrome content scripts](https://developer.chrome.com/docs/extensions/reference/manifest/content-scripts)
+- [Chrome storage API](https://developer.chrome.com/docs/extensions/reference/api/storage)
 
 ## License
 
 MIT. See [LICENSE](LICENSE).
-"# discord-joined-servers-search" 
+
+## Version 7.1.1
+
+Restores the Chrome extension name to **Discord Joined Servers Search**. The floating in-page panel intentionally keeps the shorter **Joined Servers Search** title. All v7.1.0 functionality is unchanged.

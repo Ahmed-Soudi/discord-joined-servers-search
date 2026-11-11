@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "Discord Joined Servers Search",
-  "version": "7.0.1",
-  "description": "Search and switch between Discord servers you have joined. Only joined servers; no channels or public server discovery.",
+  "version": "7.1.1",
+  "description": "Quickly search and switch between Discord servers you have already joined. No channel search or public server discovery; drag the search bar anywhere and remember its position.",
   "permissions": [
     "storage"
   ],
